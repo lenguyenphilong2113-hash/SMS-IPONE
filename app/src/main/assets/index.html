@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4f3ff">
+<title>Dịch vụ - Bản mô phỏng</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf1fb;font-family:Arial,Helvetica,sans-serif;color:#202a43}
+:root{--blue:#2878e8;--muted:#8994aa}
+.phone{width:100%;max-width:430px;min-height:100vh;margin:auto;background:linear-gradient(160deg,#f2f0ff,#f8f9ff 58%,#eff4ff);position:relative;padding-bottom:80px;overflow:hidden}
+.topbar{height:76px;padding:0 22px;display:flex;align-items:center;justify-content:space-between}
+.gift{font-size:23px;color:#3278df}.right{display:flex;align-items:center;gap:18px;color:#647493;font-size:19px}
+.wallet{font-size:14px;background:#fff;border-radius:20px;padding:7px 11px;box-shadow:0 4px 15px #243b7010}
+.screen{display:none;padding:5px 17px 25px}.screen.active{display:block}
+.quick{background:#fff;border-radius:18px;padding:20px 17px;margin:8px 0 30px;box-shadow:0 5px 20px #243b7008;cursor:pointer}
+.eyebrow{font-size:12px;color:#929bb0;letter-spacing:.6px;margin-bottom:12px}
+.quickline{display:flex;align-items:center;justify-content:space-between;font-size:21px;font-weight:600}
+.sub{font-size:14px;color:var(--muted);margin-top:8px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:0 2px 20px}
+.section-head h2{font-size:21px;font-weight:500;margin:0}.link{font-size:14px;color:#3977d3;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.service{height:210px;border-radius:20px;background:rgba(255,255,255,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;box-shadow:0 5px 18px #253b7007;cursor:pointer;transition:.15s}
+.service:active,.list-item:active{transform:scale(.97)}
+.logo{width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-size:34px;font-weight:bold}
+.whatsapp{background:#21b86b}.telegram{background:#269fe4}.wechat{background:#16b76d;font-size:25px}.tiktok{background:#080a14;text-shadow:2px 1px #fe426f,-2px -1px #36e5e7}.facebook{background:#2878e8}.instagram{background:linear-gradient(35deg,#ffb13d,#ed3478,#7545d9)}.viber{background:#6652d9}.xlogo{background:#080912;font-size:29px}.other{background:transparent;color:#2878e8;font-size:33px}
+.service-name{font-size:14px;color:#303b55}
+.primary{width:100%;height:70px;border:0;border-radius:40px;background:linear-gradient(90deg,#2878e8,#1765dc);color:white;font-size:17px;font-weight:600;margin-top:30px;box-shadow:0 5px 12px #2878e833;cursor:pointer}
+.list-title{font-size:25px;font-weight:500;margin:10px 0 22px}
+.search{height:48px;border-radius:15px;background:#fff;display:flex;align-items:center;padding:0 15px;margin-bottom:18px}
+.search input{border:0;outline:0;background:transparent;width:100%;font-size:15px;color:#34415c}
+.list{display:flex;flex-direction:column;gap:11px}
+.list-item{min-height:80px;background:rgba(255,255,255,.82);border-radius:17px;display:flex;align-items:center;padding:0 14px;gap:13px;cursor:pointer}
+.list-item .logo{width:48px;height:48px;font-size:25px;flex:none}
+.info{flex:1}.info strong{display:block;font-size:16px;font-weight:500;margin-bottom:7px}.info small{font-size:12px;color:#9aa4b8}
+.choose{font-size:14px;color:#3977d3;white-space:nowrap}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,430px);height:68px;background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:space-around;border-top:1px solid #e6eaf5;color:#8792aa;z-index:5}
+.tab{width:33.33%;height:100%;border:0;background:transparent;color:inherit;font-size:24px;cursor:pointer}.tab.active{color:#2878e8;border-top:3px solid #2878e8}
+.profile-card{background:#fff;padding:22px;border-radius:18px;margin-top:15px;line-height:1.7}
+.notice{font-size:12px;color:#8490a8;text-align:center;margin-top:15px}
+.modal-bg{display:none;position:fixed;inset:0;background:#11182c66;z-index:10;align-items:flex-end;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{width:min(100%,430px);background:#fff;border-radius:24px 24px 0 0;padding:23px 20px 30px;max-height:85vh;overflow:auto}
+.modal-head{display:flex;justify-content:space-between;align-items:center;font-size:20px;font-weight:600;margin-bottom:18px}
+.close{border:0;background:#f0f2f8;border-radius:50%;width:34px;height:34px;font-size:20px;cursor:pointer}
+.modal p{color:#75819a;font-size:14px;line-height:1.5}
+.field{width:100%;padding:14px;border:1px solid #e0e5f0;border-radius:12px;background:#fff;font-size:15px;margin:8px 0 15px}
+.demo-result{background:#f1f6ff;border-radius:14px;padding:15px;margin-top:14px;display:none;line-height:1.6}
+.primary.small{height:52px;margin-top:8px}
+@media(max-width:360px){.service{height:185px}.logo{width:54px;height:54px}.grid{gap:8px}}
+</style>
+</head>
+<body>
+<div class="phone">
+<header class="topbar"><div class="gift">♔</div><div class="right"><span id="helpBtn" style="cursor:pointer">?</span><span class="wallet">▣ &nbsp;0</span></div></header>
+
+<section class="screen active" id="home">
+ <div class="quick" onclick="openService('Whatsapp')">
+  <div class="eyebrow">QUICK START</div><div class="quickline"><span>Whatsapp</span><span>›</span></div><div class="sub">129 quốc gia</div>
+ </div>
+ <div class="section-head"><h2>Dịch vụ phổ biến</h2><span class="link" onclick="showScreen('services')">Xem tất cả</span></div>
+ <div class="grid" id="homeGrid"></div>
+ <button class="primary" onclick="openService('Chọn dịch vụ')">Lấy số điện thoại</button>
+ <div class="notice">Giao diện mô phỏng – không kết nối dịch vụ thật</div>
+</section>
+
+<section class="screen" id="services">
+ <div class="list-title">Dịch vụ</div>
+ <div class="search">⌕ &nbsp;<input id="searchInput" placeholder="Tìm kiếm nền tảng..." oninput="renderList()"></div>
+ <div class="list" id="serviceList"></div>
+</section>
+
+<section class="screen" id="profile">
+ <div class="list-title">Tài khoản</div>
+ <div class="profile-card"><b>Tài khoản mô phỏng</b><br>Ví hiện tại: 0<br><br><button class="primary small" onclick="showToast('Đây là tài khoản demo')">Thông tin tài khoản</button></div>
+ <div class="notice">Đây chỉ là trang giao diện thử nghiệm.</div>
+</section>
+
+<nav class="bottom">
+ <button class="tab active" id="tab-home" onclick="showScreen('home')">⌂</button>
+ <button class="tab" id="tab-services" onclick="showScreen('services')">▦</button>
+ <button class="tab" id="tab-profile" onclick="showScreen('profile')">●</button>
+</nav>
+</div>
+
+<div class="modal-bg" id="modalBg" onclick="if(event.target===this)closeModal()">
+ <div class="modal">
+  <div class="modal-head"><span id="modalTitle">Chọn dịch vụ</span><button class="close" onclick="closeModal()">×</button></div>
+  <p id="modalDesc">Trang thử nghiệm: số điện thoại và mã hiển thị là dữ liệu tạo ngẫu nhiên, không dùng để xác minh tài khoản.</p>
+  <label for="country">Quốc gia (mô phỏng)</label>
+  <select class="field" id="country"><option>Việt Nam</option><option>Hoa Kỳ</option><option>Indonesia</option><option>Ấn Độ</option><option>Thái Lan</option><option>Philippines</option></select>
+  <button class="primary small" onclick="runDemo()">Lấy số điện thoại</button>
+  <div class="demo-result" id="demoResult"></div>
+ </div>
+</div>
+<script>
+const services=[
+ ['Whatsapp','◉','whatsapp',129],['Telegram','➤','telegram',119],['Wechat','●●','wechat',143],
+ ['TikTok','♪','tiktok',143],['Facebook','f','facebook',142],['Instagram','◎','instagram',143],
+ ['Viber','◉','viber',141],['X Twitter','𝕏','xlogo',135],['Other Sites','▦','other',100]
+];
+let selected='Whatsapp';
+function card(s){return `<div class="service" onclick="openService('${s[0]}')"><div class="logo ${s[2]}">${s[1]}</div><div class="service-name">${s[0]}</div></div>`}
+function row(s){return `<div class="list-item" onclick="openService('${s[0]}')"><div class="logo ${s[2]}">${s[1]}</div><div class="info"><strong>${s[0]}</strong><small>${s[3]} quốc gia có sẵn</small></div><span class="choose">Chọn ›</span></div>`}
+document.getElementById('homeGrid').innerHTML=services.map(card).join('');
+function renderList(){let q=document.getElementById('searchInput').value.toLowerCase();document.getElementById('serviceList').innerHTML=services.filter(s=>s[0].toLowerCase().includes(q)).map(row).join('')||'<p>Không tìm thấy dịch vụ.</p>'}
+renderList();
+function showScreen(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active')}
+function openService(name){selected=name;document.getElementById('modalTitle').textContent=name==='Chọn dịch vụ'?'Lấy số điện thoại':name;document.getElementById('demoResult').style.display='none';document.getElementById('modalBg').classList.add('show')}
+function closeModal(){document.getElementById('modalBg').classList.remove('show')}
+let demoPhone='', demoCode='';
+function randomDigits(n){let out='';for(let i=0;i<n;i++)out+=Math.floor(Math.random()*10);return out}
+function runDemo(){
+ let country=document.getElementById('country').value;
+ const prefix=['09','07','03'][Math.floor(Math.random()*3)];
+ demoPhone=prefix+randomDigits(8);
+ demoCode='';
+ let result=document.getElementById('demoResult');
+ result.innerHTML='<b>✓ Đã lấy số điện thoại</b><br>Dịch vụ: '+selected+
+ '<br>Quốc gia: '+country+
+ '<div style="font-size:21px;font-weight:700;letter-spacing:1px;margin:12px 0">+'+demoPhone+'</div>'+
+ '<button class="primary small" id="getCodeBtn" onclick="getDemoCode()">Lấy mã (đợi 30 giây)</button>'+
+ '<div id="codeArea" style="margin-top:12px"></div>'+
+ '<small style="display:block;margin-top:12px">Dữ liệu thử nghiệm ngẫu nhiên — không phải số thuê bao hoặc mã OTP do dịch vụ gửi.</small>';
+ result.style.display='block'
+}
+function getDemoCode(){
+ const area=document.getElementById('codeArea');
+ const btn=document.getElementById('getCodeBtn');
+ if(btn.disabled) return;
+ btn.disabled=true;
+ let seconds=30;
+ btn.textContent='Vui lòng đợi '+seconds+' giây';
+ const timer=setInterval(()=>{
+   seconds--;
+   if(seconds>0){btn.textContent='Vui lòng đợi '+seconds+' giây';}
+   else{
+     clearInterval(timer);
+     demoCode=randomDigits(6);
+     btn.disabled=false;
+     btn.textContent='Lấy mã';
+     area.innerHTML='<div style="background:#fff;border:1px solid #e5eaf5;border-radius:12px;padding:14px"><div style="font-size:13px;color:#7d89a1">MÃ THỬ NGHIỆM</div><div style="font-size:30px;font-weight:700;letter-spacing:7px;color:#2878e8;margin-top:8px">'+demoCode+'</div><div style="font-size:12px;color:#929bb0;margin-top:6px">Mã ngẫu nhiên 6 chữ số, không phải OTP nhận từ SMS</div></div>';
+   }
+ },1000);
+}
+function showToast(msg){alert(msg)}
+document.getElementById('helpBtn').onclick=()=>alert('Đây là giao diện mô phỏng để xem thử các màn hình và thao tác.');
+</script>
+</body>
+</html>
